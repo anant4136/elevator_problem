@@ -25,12 +25,13 @@ class Elevator(models.Model):
             self.save()
 
     def move_to_floor(self, floor):
-        if floor > self.current_floor:
-            self.direction = 'UP'
-        elif floor < self.current_floor:
-            self.direction = 'DOWN'
-        else:
-            self.direction = 'STOPPED'
+        if self.current_floor is not None:
+            if floor > self.current_floor:
+                self.direction = 'UP'
+            elif floor < self.current_floor:
+                self.direction = 'DOWN'
+            else:
+                self.direction = 'STOPPED'
         self.current_floor = floor
         self.save()
 

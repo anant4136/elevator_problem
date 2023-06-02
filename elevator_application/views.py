@@ -22,7 +22,7 @@ class ElevatorView(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     @action(detail=False, methods=['post'])
-    def process_requests(self, request):
+    def floor_requests(self, request):
         floor_requests = request.data.get('floor_requests', [])
         for floor in floor_requests:
             closest_elevator = self.find_closest_elevator(floor)
@@ -55,7 +55,7 @@ class ElevatorView(viewsets.ModelViewSet):
             return None
         closest_elevator = elevators[0]
         closest_distance = abs(floor - closest_elevator.current_floor)
-        for elevator in elevators[1:]:
+        for elevator in elevators:
             distance = abs(floor - elevator.current_floor)
             if distance < closest_distance:
                 closest_elevator = elevator
