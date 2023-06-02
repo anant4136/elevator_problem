@@ -33,6 +33,21 @@ class ElevatorView(viewsets.ModelViewSet):
         serializer = self.get_serializer(elevators, many=True)
         return Response(serializer.data)
 
+    @action(detail=False, methods=['post'])
+    def destination_requests(self, request):
+        destination_requests = request.data.get('destination_requests', [])
+        for destination_request in destination_requests:
+            destination_floor = destination_request.get('destination_floor')
+            elevator_id = destination_request.get('elevator_id')
+            elevator = Elevator.objects.get(id=elevator_id)
+            if elevator:
+                elevator.move_to_floor(destination_floor)
+                elevator.save()
+
+        elevators = self.get_queryset()
+        serializer = self.get_serializer(elevators, many=True)
+        return Response(serializer.data)
+
     def find_closest_elevator(self, floor):
         elevators = Elevator.objects.filter(
             is_operational=True, is_door_open=False)
