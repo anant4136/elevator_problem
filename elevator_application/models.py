@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Elevator(models.Model):
+    # a list of direction choices that can be used to monitor the state of the elevator
     DIRECTION_CHOICES = (
         ('UP', 'Up'),
         ('DOWN', 'Down'),
