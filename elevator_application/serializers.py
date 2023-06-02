@@ -6,7 +6,7 @@ class ElevatorSerializer(serializers.ModelSerializer):
     status = serializers.SerializerMethodField()
 
     def get_status(self, elevator):
-        return f"Elevator {elevator.id} - Current Floor: {elevator.current_floor}, Running: {elevator.is_running}, Door Open: {elevator.is_door_open}, Direction: {elevator.direction}"
+        return f"Elevator {elevator.id} - Current Floor: {elevator.current_floor}, Operational: {elevator.is_operational}, Door Open: {elevator.is_door_open}, Direction: {elevator.direction}"
 
     class Meta:
         model = Elevator
