@@ -28,7 +28,6 @@ class ElevatorView(viewsets.ModelViewSet):
             closest_elevator = self.find_closest_elevator(floor)
             if closest_elevator:
                 closest_elevator.move_to_floor(floor)
-                self.remove_request(floor)
 
         elevators = self.get_queryset()
         serializer = self.get_serializer(elevators, many=True)
