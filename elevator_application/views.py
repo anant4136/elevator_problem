@@ -8,6 +8,7 @@ from .serializers import *
 class ElevatorView(viewsets.ModelViewSet):
     queryset = Elevator.objects.all()
     serializer_class = ElevatorSerializer
+# post the number of elevators needed and it creates the elevators and returns a list of the elevators as response in return
 
     @action(detail=False, methods=['post'])
     def create_elevators(self, request):
@@ -20,6 +21,7 @@ class ElevatorView(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(elevators, many=True)
         return Response(serializer.data)
+# post a list of numbers and then assigns elevators to each floor based nearest distance to the current elevator floor
 
     @action(detail=False, methods=['post'])
     def floor_requests(self, request):
@@ -32,6 +34,7 @@ class ElevatorView(viewsets.ModelViewSet):
         elevators = self.get_queryset()
         serializer = self.get_serializer(elevators, many=True)
         return Response(serializer.data)
+# post a list of dictionaries and then ove the elevator to the requested destination floor
 
     @action(detail=False, methods=['post'])
     def destination_requests(self, request):
@@ -47,6 +50,7 @@ class ElevatorView(viewsets.ModelViewSet):
         elevators = self.get_queryset()
         serializer = self.get_serializer(elevators, many=True)
         return Response(serializer.data)
+# finding the elevator closest to the requested floor which is operational and door is closed
 
     def find_closest_elevator(self, floor):
         elevators = Elevator.objects.filter(
